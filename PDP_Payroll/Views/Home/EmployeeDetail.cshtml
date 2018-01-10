@@ -1,0 +1,109 @@
+﻿@model PDP_Payroll.Models.EmployeeModel
+
+@{
+    ViewBag.Title = "EmployeeDetail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="parallax light-wrapper parallax4">
+    <div class="container inner ">
+        <div class="thin">
+            <div class="carousel-wrapper">
+                <h3 class="main-title text-center">Employee Detail</h3>
+                <a href="~/Home/EmployeeEdit/ @Model.employee_id" style="float:right;margin-right:20%"><span class="icon-edit"></span>Edit Empployee</a>
+                <dl class="dl-horizontal" style="margin-left:25%"> 
+                    <dt>
+                        Name
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.employee_name)
+                    </dd>
+
+                    <dt>
+                        FatherName
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.employee_Fathername)
+                    </dd>
+
+                    <dt>
+                        Email
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.employee_email)
+                    </dd>
+
+                    <dt>
+                        Phone no
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.employee_phoneNo)
+                    </dd>
+                    <dt>
+                        State
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.state.state_name)
+                    </dd>
+                    <dt>
+                      Address
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.employee_Address)
+                    </dd>
+
+                    <dt>
+                         NIC
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.employee_NIC)
+                    </dd>
+
+                    <dt>
+                      Martial Status
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.employee_MartialStatus)
+                    </dd>
+
+                    <dt>
+                       No of Dependency
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.employee_NoOfDependency)
+                    </dd>
+
+                    <dt>
+                       Wage(Hourly)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.employee_Wages)$
+                    </dd>
+                    <dt>
+                        Branch
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.branch.branch_name)
+                    </dd>
+                    <br />
+                    <p>
+
+                        @Html.ActionLink("Back to List", "Index")
+                    </p>
+                </dl>
+            </div>
+           
+            </div>
+        </div>
+    </div>

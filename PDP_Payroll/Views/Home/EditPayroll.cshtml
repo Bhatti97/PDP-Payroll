@@ -1,0 +1,334 @@
+﻿@model PDP_Payroll.Models.PayRoll_ParentModel
+@using PDP_Payroll.Models
+@{
+    ViewBag.Title = "CalculatePayroll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    PDP_DbContext db = new PDP_DbContext();
+    int count = 0;
+    var childPayroll = db.PayRoll.Where(m => m.PayRoll_Parent_id == Model.PayRoll_Parent_id).ToList();
+}
+<style>
+    td{
+        margin-bottom:400%;
+    }
+</style>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="parallax light-wrapper parallax4">
+        <div class="inner ">
+            <div class="thin">
+                <br />
+                <h3 class="main-title text-center">Edit Payroll</h3>
+                <div class="form-container">
+                    <div class="row ">
+                        <div class="col-md-6 hidden">
+                            <div class="form-field">
+                                <label>
+                                    <input name="PayRoll_Parent_id" id="PayRoll_Parent_id" class="form-control text-box single-line" placeholder="PayRoll id" type="text" value="@Model.PayRoll_Parent_id" required />
+                                    <span class="error error-PayRoll_Title" style="color:red;"><br /></span>
+                                    <i class="budicon-calculator"></i>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-field">
+                                <label>
+                                    <input name="PayRoll_Title" id="PayRoll_Title" class="form-control text-box single-line" placeholder="PayRoll Name" type="text" value="@Model.Payroll_Title" required/>
+                                    <span class="error error-PayRoll_Title" style="color:red;"><br /></span>
+                                    <i class="budicon-calculator"></i>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-field">
+                                <label>
+                                    <input name="Date" id="Date" class="form-control" type="date" />
+                                    <span class="error error-Date" style="color:red;"><br /></span>
+                                    <i class="budicon-date"></i>
+                                </label>
+                            </div>
+                        </div>
+                        <script>
+                            document.getElementById("Date").value = "@Model.Date.ToString("yyyy-MM-dd")";
+                        </script>
+                        <div class="col-md-12">
+
+                            <div class="col-md-3"></div>
+
+                            <div class="col-md-6">
+                                <button type="submit" id="submit" class="btn btn-default" style="width:100%"><span class="icon-floppy">   </span>Save Payroll</button>
+                            </div>
+                            <div class="col-md-3"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th class="text-center" style="width:10%">Branch</th>
+                <th class="text-center" style="width:10%">Employee Name</th>
+                <th class="text-center"style="width:10%">State</th>
+                <th class="text-center"style="width:5%">Wage Rate/Salary</th>
+                <th class="text-center"style="width:5%">Total Hours</th>
+                <th class="text-center"style="width:5%">Worked Hours</th>
+                <th class="text-center"style="width:5%">Total Hours Amount</th>
+                <th class="text-center"style="width:5%">Over Time Hours</th>
+                <th class="text-center"style="width:5%">Over Time Amount</th>
+                <th class="text-center" style="width:5%">Total Amount</th>
+                <th class="text-center"style="width:5%">State Tax</th>
+                <th class="text-center"style="width:5%">City Tax</th>
+                <th class="text-center"style="width:5%">Medicad</th>
+                <th class="text-center"style="width:5%">SSTax</th>
+                <th class="text-center" style="width:5%">Deduction</th>
+                <th class="text-center" style="width:5%">Net Pay</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in childPayroll)
+                {
+                <tr>
+                    <td>
+                        <input type="text" class="text-center hidden" name="child_Payroll[@count].payroll_id" id="payroll_id[@count]" value="@item.payroll_id" readonly />
+                    <input type="text" class="text-center" name="child_Payroll[@count].branch_name" id="branch_name[@count]" value="@item.branch_name" readonly />
+                    </td>
+                    <td><input type="text" class="text-center" name="child_Payroll[@count].employee_name" id="employee_name[@count]" value="@item.employee_name" readonly /></td>
+                    <td><input type="text" class="text-center" name="child_Payroll[@count].state_name" id="state_name[@count]" value="@item.state_name" readonly /></td>
+                    <td><input type="text" class="text-center" name="child_Payroll[@count].employee_Wages" id="employee_Wages[@count]" value="@item.employee_Wages" placeholder="" readonly /></td>
+
+                    @{
+                        if (item.total_hours == -100 && item.worked_hours == -100)
+                        {
+                            <td>
+                                <input type="text" class="text-center" name="" value="Fixed" placeholder="" readonly required />
+                                <input type="text" class="text-center hidden" name="child_Payroll[@count].total_hours" id="total_hours[@count]" value="-100" placeholder="" readonly />
+                            </td>
+
+                            <td>
+                                <input type="text" class="text-center" name="child_Payroll[@count]." value="Fixed" readonly />
+                                <input type="text" class="text-center hidden" name="child_Payroll[@count].worked_hours" id="worked_hours[@count]" value="-100" readonly />
+                            </td>
+                        }
+                        else
+                        {
+                            <td><input type="text" class="text-center" name="child_Payroll[@count].total_hours" id="total_hours[@count]" value="@item.total_hours" readonly /></td>
+                            <td><input type="number" class="text-center" id="worked_hours[@count]" name="child_Payroll[@count].worked_hours" value="@item.worked_hours" onkeyup="CalculateNetPay();" required /></td>
+
+                        }
+                    }
+                    @{
+                        if (item.total_hours == -100 && item.worked_hours == -100)
+                        {
+                            <td>
+                                <input type="text" class="text-center" name="child_Payroll[@count].total_hours_amount" value="@item.employee_Wages" id="total_hours_amount[@count]" readonly />
+                            </td>
+
+                            <td>
+                                <input type="text" class="text-center" name="" value="Fixed" readonly />
+                                <input type="number" class="text-center hidden" name="child_Payroll[@count].over_time_hours" value="0" id="over_time_hours_fixed[@count]" readonly />
+                            </td>
+
+                            <td>
+                                <input type="text" class="text-center" name="child_Payroll[@count]." value="Fixed" readonly />
+                                <input type="number" class="text-center hidden" name="child_Payroll[@count].over_time_amount" value="0" id="over_time_amount_fixed[@count]" readonly />
+                            </td>
+
+                            <td><input type="number" class="text-center" name="child_Payroll[@count].TotalAmount" id="TotalAmount[@count]" value="@item.employee_Wages" readonly /></td>
+
+                        }
+                        else
+                        {
+
+                            <td><input type="number" class="text-center" name="child_Payroll[@count].total_hours_amount" id="total_hours_amount[@count]" value="@item.total_hours_amount" readonly /></td>
+                            <td><input type="number" class="text-center" name="child_Payroll[@count].over_time_hours" id="over_time_hours[@count]" value="@item.over_time_hours" onkeyup="CalculateNetPay();" required /></td>
+                            <td><input type="number" class="text-center" name="child_Payroll[@count].over_time_amount" id="over_time_amount[@count]" value="@item.over_time_amount" readonly /></td>
+                            <td><input type="number" class="text-center" name="child_Payroll[@count].TotalAmount" id="TotalAmount[@count]" value="@item.TotalAmount" readonly /></td>
+                        }
+                        float salesTax = 0;
+                        try
+                        {
+                            salesTax = db.Tax.Where(m => m.state.state_name == item.state_name && m.tax_title == "State Tax").SingleOrDefault().tax_percentage;
+                            <td>
+                                <input type="number" class="text-center hidden" name="child_Payroll[@count].state_tax_Percentge" value="@salesTax" id="state_tax_Percentge[@count]" readonly />
+
+                                <input type="number" class="text-center" name="child_Payroll[@count].state_tax" value="@item.state_tax" id="state_tax[@count]" readonly />
+                            </td>
+                        }
+                        catch (Exception)
+                        {
+                            <td>
+                                <input type="number" class="text-center hidden" name="child_Payroll[@count].state_tax_Percentge" value="0" id="state_tax_Percentge[@count]" readonly />
+                                <input type="number" class="text-center" name="child_Payroll[@count].state_tax" value="0" id="state_tax[@count]" readonly />
+                            </td>
+                        }
+
+                        float cityTax = 0;
+                        try
+                        {
+                            cityTax = db.Tax.Where(m => m.state.state_name == item.state_name && m.tax_title == "City Tax").SingleOrDefault().tax_percentage;
+                            <td>
+                                <input type="number" class="text-center hidden" name="child_Payroll[@count].city_tax_Percentge" value="@cityTax" id="city_tax_Percentge[@count]" readonly />
+                                <input type="number" class="text-center" name="child_Payroll[@count].city_Tax" value="@item.city_Tax" id="city_Tax[@count]" readonly />
+                            </td>
+                        }
+                        catch (Exception)
+                        {
+                            <td>
+                                <input type="number" class="text-center hidden" name="child_Payroll[@count].city_tax_Percentge" value="0" id="city_tax_Percentge[@count]" readonly />
+                                <input type="number" class="text-center" name="child_Payroll[@count].city_Tax" value="0" id="city_Tax[@count]" readonly />
+                            </td>
+                        }
+                        float medicad = 0;
+                        try
+                        {
+                            medicad = db.Tax.Where(m => m.state.state_name == item.state_name && m.tax_title == "Medicad").SingleOrDefault().tax_percentage;
+                            <td>
+                                <input type="number" class="text-center hidden" name="child_Payroll[@count].medicad_Percentge" value="@medicad" id="medicad_Percentge[@count]" readonly />
+                                <input type="number" class="text-center" name="child_Payroll[@count].medicad" value="0" id="medicad[@count]" readonly />
+                            </td>
+                        }
+                        catch (Exception)
+                        {
+                            <td>
+                                <input type="number" class="text-center hidden" name="child_Payroll[@count].mdeicad_Percentge" value="0" id="medicad_Percentge[@count]" readonly />
+                                <input type="number" class="text-center" name="child_Payroll[@count].medicad" value="0" id="medicad[@count]" readonly />
+                            </td>
+                        }
+                        float SSTax = 0;
+                        try
+                        {
+                            SSTax = db.Tax.Where(m => m.state.state_name == item.state_name && m.tax_title == "SSTax").SingleOrDefault().tax_percentage;
+                            <td>
+                                <input type="number" class="text-center hidden" name="child_Payroll[@count].SSTax_Percentge" value="@SSTax" id="SSTax_Percentge[@count]" readonly />
+                                <input type="number" class="text-center" name="child_Payroll[@count].SSTax" value="@item.SSTax" id="SSTax[@count]" readonly />
+                            </td>
+                        }
+                        catch (Exception)
+                        {
+                            <td>
+                                <input type="number" class="text-center hidden" name="child_Payroll[@count].SSTax_Percentge" value="0" id="SSTax_Percentge[@count]" readonly />
+                                <input type="number" class="text-center" name="child_Payroll[@count].SSTax_Percentge" value="0" id="SSTax[@count]" readonly />
+                            </td>
+                        }
+                        <td><input type="number" class="text-center" name="child_Payroll[@count].Deduction" id="Deduction[@count]" value="@item.Deduction" onkeyup="CalculateNetPay();" required /></td>
+
+                        <td><input type="number" class="text-center" name="child_Payroll[@count].NetPay" value="@item.NetPay" id="NetPay[@count]" readonly /></td>
+
+                    }
+                </tr>
+                    count++;
+                   }
+        </tbody>
+    </table>
+    }
+<script type="text/javascript">
+    function CalculateNetPay()
+    {
+        @for (int i = 0; i < childPayroll.Count(); i++) {
+
+        <Text>
+        var wageRate_@i = parseFloat(document.getElementById('employee_Wages[@i]').value);
+
+        var totalhours_@i = parseFloat(document.getElementById('total_hours[@i]').value);
+
+        var Workedhours_@i = parseFloat(document.getElementById('worked_hours[@i]').value);
+
+        if(Workedhours_@i ==-100 && totalhours_@i==-100)
+        {
+            var PayableAmount_@i =parseFloat( document.getElementById('TotalAmount[@i]').value);
+
+            document.getElementById('TotalAmount[@i]').value = PayableAmount_@i;
+
+            var stateTax_Percentge_@i = parseFloat(document.getElementById('state_tax_Percentge[@i]').value);
+
+            var cityTax_Percentge_@i = parseFloat(document.getElementById('city_tax_Percentge[@i]').value);
+
+            var Medicade_Percentge_@i = parseFloat(document.getElementById('medicad_Percentge[@i]').value);
+
+            var SSTax_Percentge_@i = parseFloat(document.getElementById('SSTax_Percentge[@i]').value);
+
+            var stateTax_@i = parseFloat(PayableAmount_@i * stateTax_Percentge_@i);
+
+            document.getElementById('state_tax[@i]').value = stateTax_@i;
+
+            var cityTax_@i = parseFloat(PayableAmount_@i * cityTax_Percentge_@i);
+
+            document.getElementById('city_Tax[@i]').value = cityTax_@i;
+
+            var medicad_@i = parseFloat(PayableAmount_@i * Medicade_Percentge_@i);
+
+            document.getElementById('medicad[@i]').value = medicad_@i;
+
+            var SSTax_@i = parseFloat(PayableAmount_@i * SSTax_Percentge_@i);
+
+            document.getElementById('SSTax[@i]').value = SSTax_@i;
+
+            var Deduction_@i =parseFloat( document.getElementById('Deduction[@i]').value);
+
+            var NetPay_@i=parseFloat(PayableAmount_@i-stateTax_@i-cityTax_@i-medicad_@i-SSTax_@i-Deduction_@i);
+            document.getElementById('NetPay[@i]').value =NetPay_@i;
+        }
+        else
+        {
+            var TotalhoursAmount_@i = parseFloat(wageRate_@i * Workedhours_@i);
+
+            document.getElementById('total_hours_amount[@i]').value = TotalhoursAmount_@i;
+
+            var overTimeHours_@i = parseFloat(document.getElementById('over_time_hours[@i]').value);
+
+            if (Workedhours_@i > totalhours_@i)
+            {
+                var balancehours_@i =   Workedhours_@i-totalhours_@i;
+                Workedhours_@i = totalhours_@i;
+                document.getElementById('worked_hours[@i]').value=Workedhours_@i;
+                overTimeHours_@i += balancehours_@i;
+                document.getElementById('over_time_hours[@i]').value=overTimeHours_@i;
+            }
+
+            var overTimeAmount_@i = parseFloat(overTimeHours_@i * (wageRate_@i * 1.5));
+
+            document.getElementById('over_time_amount[@i]').value = overTimeAmount_@i;
+
+            var PayableAmount_@i =parseFloat( TotalhoursAmount_@i + overTimeAmount_@i);
+
+            document.getElementById('TotalAmount[@i]').value = PayableAmount_@i;
+
+            var stateTax_Percentge_@i = parseFloat(document.getElementById('state_tax_Percentge[@i]').value);
+
+            var cityTax_Percentge_@i = parseFloat(document.getElementById('city_tax_Percentge[@i]').value);
+
+            var Medicade_Percentge_@i = parseFloat(document.getElementById('medicad_Percentge[@i]').value);
+
+            var SSTax_Percentge_@i = parseFloat(document.getElementById('SSTax_Percentge[@i]').value);
+
+            var stateTax_@i = parseFloat(PayableAmount_@i * stateTax_Percentge_@i);
+
+            document.getElementById('state_tax[@i]').value = stateTax_@i;
+
+            var cityTax_@i = parseFloat(PayableAmount_@i * cityTax_Percentge_@i);
+
+            document.getElementById('city_Tax[@i]').value = cityTax_@i;
+
+            var medicad_@i = parseFloat(PayableAmount_@i * Medicade_Percentge_@i);
+
+            document.getElementById('medicad[@i]').value = medicad_@i;
+
+            var SSTax_@i = parseFloat(PayableAmount_@i * SSTax_Percentge_@i);
+
+            document.getElementById('SSTax[@i]').value = SSTax_@i;
+
+            var Deduction_@i =parseFloat( document.getElementById('Deduction[@i]').value);
+
+            var NetPay_@i=parseFloat(PayableAmount_@i-stateTax_@i-cityTax_@i-medicad_@i-SSTax_@i-Deduction_@i);
+            document.getElementById('NetPay[@i]').value =NetPay_@i;
+        }
+        </Text>
+
+        }
+    }
+    CalculateNetPay();
+</script>

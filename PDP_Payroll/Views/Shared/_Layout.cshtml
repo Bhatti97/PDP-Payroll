@@ -1,0 +1,443 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<!-- Mirrored from themes.iki-bir.com/kwoon/index7.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 05 Jul 2017 16:14:23 GMT -->
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="~/Content/FrontEntContent/style/images/favicon.png">
+    <title>PDP - @ViewBag.Title</title>
+    <!-- Bootstrap core CSS -->
+
+    <link href="~/Content/FrontEntContent/style/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/Content/FrontEntContent/style/css/plugins.css" rel="stylesheet">
+    <link href="~/Content/FrontEntContent/style/style.css" rel="stylesheet">
+    <link href="~/Content/FrontEntContent/style/css/color/blue.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Raleway:400,300,500,600,700,800,900' rel='stylesheet' type='text/css'>
+    <link href="~/Content/FrontEntContent/style/type/icons.css" rel="stylesheet">
+
+    @*<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>*@
+    <script src="~/Content/FrontEntContent/style/js/jquery.min.js"></script>
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+    <link href="~/Content/AdminPanelcontent/assets/vendors/jquery-ui-1.12.0/jquery-ui.css" rel="stylesheet">
+    <script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	  })(window,document,'script','../../../../www.google-analytics.com/analytics.js','ga');
+
+	  ga('create', 'UA-90680653-1', 'auto');
+	  ga('send', 'pageview');
+
+    </script>
+</head>
+<body>
+    <div class="body-wrapper">
+        <nav class="yamm navbar navbar-default default solid light" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <div class="basic-wrapper">
+                        <a class="btn responsive-menu" data-toggle="collapse" data-target=".navbar-collapse"><i></i></a>
+                        <div class="navbar-brand"> <a href="~/Home"><img src="~/Content/FrontEntContent/style/images/logo-dark.png" alt="" data-src="../Content/FrontEntContent/style/images/logo-dark.png" data-ret="../Content/FrontEntContent/style/images/logo-dark@2x.png" class="retina" /></a></div>
+                    </div>
+                    <!-- /.basic-wrapper -->
+                </div>
+                <!-- /.navbar-header -->
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li class="dropdown yamm-fullwidth">
+                            <a href="~/Home">Home </a>                           
+                        </li>
+                        @if (Session["Email"] != null)
+                        {
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle js-activated" data-toggle="dropdown">Manage Company/Branches <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="~/Home/CompanyView">Manage Company</a></li>
+                                    <li><a href="~/Home/BranchList">Manage Branches</a></li>
+                                </ul>
+                            </li>
+                            <li class=" dropdown yamm-fullwidth">
+                                <a href="~/Home/EmployeeList">Manage Employees </a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle js-activated" data-toggle="dropdown">Payroll<span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="~/Home/PayrollList">Payrolls</a></li>
+                                    <li><a href="#">Payrolls Report</a></li>
+                                </ul>
+                            </li>
+                            <li class=" dropdown yamm-fullwidth">
+                                <a href="~/Contact">Contact </a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle js-activated" data-toggle="dropdown">@Session["Email"] <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="~/Home/ChanePassword">Change Password</a></li>
+                                    <li><a href="~/Home/Logout"><span class="label label-danger">Logout</span></a></li>                                    
+                                </ul>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class=" dropdown yamm-fullwidth">
+                                <a href="~/Contact">Contact </a>
+                            </li>
+                            <li class=" dropdown yamm-fullwidth">
+                               @Html.ActionLink("Login","Login","Home")
+                            </li>
+                        }
+                       
+                    </ul>
+                    <!-- /.navbar-nav -->
+                </div>
+                <!-- /.navbar-collapse -->
+            </div>
+            <!-- /.container -->
+        </nav>
+        <!-- /.navbar -->
+
+        @RenderBody()
+
+        <footer class="footer inverse-wrapper">
+            <div class="container inner">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="widget">
+                            <h3 class="widget-title">Popular Posts</h3>
+                            <ul class="post-list">
+                                <li>
+                                    <div class="icon-overlay"> <a href="blog-post.html"><img src="~/Content/FrontEntContent/style/images/art/a1.jpg" alt="" /> </a> </div>
+                                    <div class="meta">
+                                        <h5><a href="blog-post.html">Magna Mollis Ultricies</a></h5>
+                                        <em><span class="date">3th Oct 2012</span> <span class="comments"><a href="#">8 <i class="icon-chat-1"></i></a></span></em>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="icon-overlay"> <a href="blog-post.html"><img src="~/Content/FrontEntContent/style/images/art/a2.jpg" alt="" /> </a> </div>
+                                    <div class="meta">
+                                        <h5><a href="blog-post.html">Ornare Nullam Risus Tellus Elit Fusce Inceptos Etiam</a></h5>
+                                        <em><span class="date">28th Sep 2012</span> <span class="comments"><a href="#">5 <i class="icon-chat-1"></i></a></span></em>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="icon-overlay"> <a href="blog-post.html"><img src="~/Content/FrontEntContent/style/images/art/a3.jpg" alt="" /> </a> </div>
+                                    <div class="meta">
+                                        <h5><a href="blog-post.html">Euismod Nullam</a></h5>
+                                        <em><span class="date">15th Aug 2012</span> <span class="comments"><a href="#">9 <i class="icon-chat-1"></i></a></span></em>
+                                    </div>
+                                </li>
+                            </ul>
+                            <!-- /.post-list -->
+                        </div>
+                        <!-- /.widget -->
+                    </div>
+                    <!-- /column -->
+
+                    <div class="col-sm-4">
+                        <div class="widget">
+                            <h3 class="widget-title">Subscribe to Our Newsletter</h3>
+                            <div class="newsletter-wrapper">
+                                <div id="mc_embed_signup2" class="newsletter-form">
+                                    <form action="http://elemisfreebies.us3.list-manage1.com/subscribe/post?u=ddc180777a163e0f9f66ee014&amp;id=056957de28" method="post" id="mc-embedded-subscribe-form2" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate="">
+                                        <input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL2" placeholder="Enter email" required="">
+                                        <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+                                        <div style="position: absolute; left: -5000px;">
+                                            <input type="text" name="b_ddc180777a163e0f9f66ee014_056957de28" value="">
+                                        </div>
+                                        <div class="clear">
+                                            <input type="submit" value="Join" name="subscribe" id="mc-embedded-subscribe2" class="btn">
+                                        </div>
+                                    </form>
+                                </div>
+                                <!-- /#mc_embed_signup2 -->
+                            </div>
+                            <!-- /.newsletter-wrapper -->
+                        </div>
+                        <!-- /.widget -->
+                        <div class="widget">
+                            <h3 class="widget-title">Get In Touch</h3>
+                            <p>Fusce dapibus, tellus commodo, tortor mauris condimentum utellus.</p>
+                            <div class="contact-info">
+                                <i class="icon-location"></i> Moonshine St. 14/05 Light City <br />
+                                <i class="icon-phone"></i>+00 (123) 456 78 90 <br />
+                                <i class="icon-mail"></i> <a href="first.last%40email.html">first.last@email.com</a>
+                            </div>
+                            <!-- /.contact-info -->
+                        </div>
+                        <!-- /.widget -->
+
+                    </div>
+                    <!-- /column -->
+
+                    <div class="col-sm-4">
+                        <div class="widget">
+                            <h4 class="widget-title">Tags</h4>
+                            <ul class="tag-list">
+                                <li><a href="#" class="btn">Web</a></li>
+                                <li><a href="#" class="btn">Photography</a></li>
+                                <li><a href="#" class="btn">Illustation</a></li>
+                                <li><a href="#" class="btn">Fun</a></li>
+                                <li><a href="#" class="btn">Blog</a></li>
+                                <li><a href="#" class="btn">Commercial</a></li>
+                            </ul>
+                            <!-- /.tag-list -->
+                        </div>
+                        <!-- /.widget -->
+
+                        <div class="widget">
+                            <h4 class="widget-title">Categories</h4>
+                            <ul class="circled">
+                                <li><a href="#">Web Design (21)</a></li>
+                                <li><a href="#">Photography (19)</a></li>
+                                <li><a href="#">Graphic Design (16)</a></li>
+                                <li><a href="#">Motion Video (23)</a></li>
+                            </ul>
+                        </div>
+                        <!-- /.widget -->
+
+                    </div>
+                    <!-- /column -->
+
+                </div>
+                <!-- /.row -->
+            </div>
+            <!-- .container -->
+
+            <div class="sub-footer">
+                <div class="container">
+                    <p class="pull-left">© 2015 Kwoon. All rights reserved. Theme by <a href="http://elemisfreebies.com/">elemis</a>.</p>
+                    <ul class="social pull-right">
+                        <li><a href="#"><i class="icon-s-rss"></i></a></li>
+                        <li><a href="#"><i class="icon-s-twitter"></i></a></li>
+                        <li><a href="#"><i class="icon-s-facebook"></i></a></li>
+                        <li><a href="#"><i class="icon-s-pinterest"></i></a></li>
+                        <li><a href="#"><i class="icon-s-linkedin"></i></a></li>
+                    </ul>
+                    <!-- .social -->
+                </div>
+                <!-- .container -->
+            </div>
+            <!-- .sub-footer -->
+        </footer>
+        <!-- /footer -->
+
+        <a id="contact-info-button" href="#contact-info"><i class="icon-mail-1"></i></a>
+        <div id="contact-info">
+            <div class="modal-content">
+                <div class="container inner">
+                    <div class="thin">
+                        <h2 class="main-title text-center"><strong>Get in Touch</strong></h2>
+                        <p class="lead text-center">Nullam quis risus eget urna mollis ornare vel eu leo. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. </p>
+                        <div class="divide30"></div>
+                        <div class="row text-center text-boxes">
+                            <div class="col-sm-4">
+                                <div class="icon bm20"> <img src="~/Content/FrontEntContent/style/images/icons/icon-worldmap.png" data-src="../Content/FrontEntContent/style/images/icons/icon-worldmap.png" data-ret="../Content/FrontEntContent/style/images/icons/icon-worldmap@2x.png" class="retina" alt="" /> </div>
+                                <p>
+                                    Moon Street Light Avenue <br>
+                                    14/05 Jupiter, JP 80630
+                                </p>
+                            </div>
+                            <!--/column -->
+                            <div class="col-sm-4">
+                                <div class="icon bm20"> <img src="~/Content/FrontEntContent/style/images/icons/icon-phone.png" data-src="../Content/FrontEntContent/style/images/icons/icon-phone.png" data-ret="../Content/FrontEntContent/style/images/icons/icon-phone@2x.png" class="retina" alt="" /> </div>
+                                <p>
+                                    00 (123) 456 78 90 <br>
+                                    00 (987) 654 32 10
+                                </p>
+                            </div>
+                            <!--/column -->
+                            <div class="col-sm-4">
+                                <div class="icon bm20"> <img src="~/Content/FrontEntContent/style/images/icons/icon-openmail.png" data-src="../Content/FrontEntContent/style/images/icons/icon-openmail.png" data-ret="../Content/FrontEntContent/style/images/icons/icon-openmail@2x.png" class="retina" alt="" /> </div>
+                                <p>
+                                    <a class="nocolor" href="mailto:#">manager@email.com</a> <br>
+                                    <a class="nocolor" href="mailto:#">asistant@email.com</a>
+                                </p>
+                            </div>
+                            <!--/column -->
+                        </div>
+                        <!--/.steps -->
+
+                        <div class="divide50"></div>
+                        <h2 class="post-title">Feel Free to Drop Us a Line</h2>
+                        <p>Nullam quis risus eget urna mollis ornare vel eu leo. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Maecenas faucibus.</p>
+                        <div class="divide10"></div>
+                        <div class="form-container">
+                            <form action="http://themes.iki-bir.com/kwoon/contact/vanilla-form.php" method="post" class="vanilla-modal vanilla-form" novalidate="novalidate">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-field">
+                                            <label>
+                                                <input type="text" name="name" placeholder="Your name" required="required">
+                                                <i class="icon-user"></i>
+                                            </label>
+                                        </div>
+                                        <!--/.form-field -->
+                                    </div>
+                                    <!--/column -->
+                                    <div class="col-sm-6">
+                                        <div class="form-field">
+                                            <label>
+                                                <input type="email" name="email" placeholder="Your e-mail" required="required">
+                                                <i class="icon-mail-alt"></i>
+                                            </label>
+                                        </div>
+                                        <!--/.form-field -->
+                                    </div>
+                                    <!--/column -->
+                                    <div class="col-sm-6">
+                                        <div class="form-field">
+                                            <label>
+                                                <input type="tel" name="tel" placeholder="Phone">
+                                                <i class="icon-phone"></i>
+                                            </label>
+                                        </div>
+                                        <!--/.form-field -->
+                                    </div>
+                                    <!--/column -->
+                                    <div class="col-sm-6">
+                                        <div class="form-field">
+                                            <label class="custom-select">
+                                                <select name="department" required="required">
+                                                    <option value="">Select Department</option>
+                                                    <option value="Sales">Sales</option>
+                                                    <option value="Marketing">Marketing</option>
+                                                    <option value="Support">Customer Support</option>
+                                                    <option value="Other">Other</option>
+                                                </select>
+                                                <i class="icon-ok"></i><span><!-- fake select handler --></span>
+                                            </label>
+                                        </div>
+                                        <!--/.form-field -->
+                                    </div>
+                                    <!--/column -->
+                                </div>
+                                <!--/.row -->
+                                <textarea name="message" placeholder="Type your message here~."></textarea>
+                                <div class="radio-set">
+                                    <label>Subject:</label>
+                                    <label>
+                                        <input type="radio" name="subject" value="General">
+                                        <span><!-- fake radio --></span> General
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="subject" value="Hi">
+                                        <span><!-- fake radio --></span> Say Hi
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="subject" value="Other">
+                                        <span><!-- fake radio --></span> Other
+                                    </label>
+                                </div>
+                                <!--/.radio-set -->
+                                <input type="submit" class="btn" value="Send" data-error="Fix errors" data-processing="Sending~." data-success="Thank you!">
+                                <footer class="notification-box"></footer>
+                            </form>
+                            <!--/.vanilla-form -->
+                        </div>
+                        <!--/.form-container -->
+
+                    </div>
+                    <!--/.thin -->
+                </div>
+                <!--/.container -->
+                <!--THIS IS IMPORTANT! to close the modal, the class name has to match the name given on the ID -->
+                <a id="btn-close-modal" class="close-contact-info"><i class="icon-cancel-1"></i></a>
+            </div>
+            <!--/.modal-content -->
+        </div>
+        <!--/#contact-info -->
+
+
+
+    </div>
+    <!--/.body-wrapper -->
+    
+    <script src="~/Content/FrontEntContent/style/js/bootstrap.min.js"></script>
+    <script src="~/Content/FrontEntContent/style/js/plugins.js"></script>
+    <script src="~/Content/FrontEntContent/style/js/jquery.themepunch.tools.min.js"></script>
+    <script src="~/Content/FrontEntContent/style/js/scripts.js"></script>
+    <!-- DEMO ONLY -->
+    <link rel="alternate stylesheet" property="stylesheet" type="text/css" href="~/Content/FrontEntContent/switcher/aqua.css" title="kwoonnewaqua-color" media="screen" />
+    <link rel="alternate stylesheet" property="stylesheet" type="text/css" href="~/Content/FrontEntContent/switcher/blue.css" title="kwoonnewblue-color" media="screen" />
+    <link rel="alternate stylesheet" property="stylesheet" type="text/css" href="~/Content/FrontEntContent/switcher/brown.css" title="kwoonnewbrown-color" media="screen" />
+    <link rel="alternate stylesheet" property="stylesheet" type="text/css" href="~/Content/FrontEntContent/switcher/gray.css" title="kwoonnewgray-color" media="screen" />
+    <link rel="alternate stylesheet" property="stylesheet" type="text/css" href="~/Content/FrontEntContent/switcher/green.css" title="kwoonnewgreen-color" media="screen" />
+    <link rel="alternate stylesheet" property="stylesheet" type="text/css" href="~/Content/FrontEntContent/switcher/lime.css" title="kwoonnewlime-color" media="screen" />
+    <link rel="alternate stylesheet" property="stylesheet" type="text/css" href="~/Content/FrontEntContent/switcher/mint.css" title="kwoonnewmint-color" media="screen" />
+    <link rel="alternate stylesheet" property="stylesheet" type="text/css" href="~/Content/FrontEntContent/switcher/navy.css" title="kwoonnewnavy-color" media="screen" />
+    <link rel="alternate stylesheet" property="stylesheet" type="text/css" href="~/Content/FrontEntContent/switcher/orange.css" title="kwoonneworange-color" media="screen" />
+    <link rel="alternate stylesheet" property="stylesheet" type="text/css" href="~/Content/FrontEntContent/switcher/pink.css" title="kwoonnewpink-color" media="screen" />
+    <link rel="alternate stylesheet" property="stylesheet" type="text/css" href="~/Content/FrontEntContent/switcher/purple.css" title="kwoonnewpurple-color" media="screen" />
+    <link rel="alternate stylesheet" property="stylesheet" type="text/css" href="~/Content/FrontEntContent/switcher/red.css" title="kwoonnewred-color" media="screen" />
+    <link rel="alternate stylesheet" property="stylesheet" type="text/css" href="~/Content/FrontEntContent/switcher/rose.css" title="kwoonnewrose-color" media="screen" />
+    <link rel="alternate stylesheet" property="stylesheet" type="text/css" href="~/Content/FrontEntContent/switcher/yellow.css" title="kwoonnewyellow-color" media="screen" />
+    <script type="text/javascript" src="~/Content/FrontEntContent/switcher/switchstylesheet.js"></script>
+   
+    <!--  DataTables.net Plugin    -->
+    <script src="~/Content/AdminPanelcontent/assets/vendors/jquery.datatables.js"></script>
+    <!-- Sweet Alert 2 plugin -->
+    <script src="~/Content/AdminPanelcontent/assets/vendors/sweetalert2.js"></script>
+    <!--	Plugin for Fileupload, full documentation here: http://www.jasny.net/bootstrap/javascript/#fileinput -->
+    <script src="~/Content/AdminPanelcontent/assets/vendors/jasny-bootstrap.min.js"></script>
+    
+
+
+    <script type="text/javascript">
+    $(document).ready(function() {
+        $('#datatables').DataTable({
+            "pagingType": "full_numbers",
+            "lengthMenu": [
+                [10, 25, 50, -1],
+                [10, 25, 50, "All"]
+            ],
+            responsive: true,
+            language: {
+                search: "_INPUT_",
+                searchPlaceholder: "Search records",
+            }
+
+        });
+
+
+        var table = $('#datatables').DataTable();
+
+        // Edit record
+        table.on('click', '.edit', function() {
+            $tr = $(this).closest('tr');
+
+            var data = table.row($tr).data();
+            alert('You press on Row: ' + data[0] + ' ' + data[1] + ' ' + data[2] + '\'s row.');
+        });
+
+        // Delete a record
+        table.on('click', '.remove', function(e) {
+            $tr = $(this).closest('tr');
+            table.row($tr).remove().draw();
+            e.preventDefault();
+        });
+
+        //Like record
+        table.on('click', '.like', function() {
+            alert('You clicked on Like button');
+        });
+
+        $('.card .material-datatables label').addClass('form-group');
+    });
+    </script>
+
+    <script type="text/javascript">
+$(document).ready(function(){
+	$(".changecolor").switchstylesheet( { seperator:"color"} );
+});
+    </script>
+</body>
+<!-- Mirrored from themes.iki-bir.com/kwoon/index7.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 05 Jul 2017 16:14:33 GMT -->
+</html>

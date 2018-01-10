@@ -1,0 +1,257 @@
+﻿@model PDP_Payroll.Models.BranchModel
+@{
+    ViewBag.Title = "BranchEdit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script type="text/javascript">
+    
+    @if (TempData["Alert"] != null)
+    {
+        <text>alert('@TempData["Alert"]');</text>
+        TempData["Alert"] = null;
+    }
+   
+    $(document).ready(function()
+    {    
+
+        $('#branch_name').keyup(function() {
+            $('span.error-branch_name').remove();
+                        var inputVal = $(this).val();
+                        if(inputVal.length==0)
+                        {
+                $(this).after('<span class="error error-branch_name" style="color:red;"></br>*Required!</span>');
+                        }
+                    });
+        $('#branch_name').focusout(function() {
+            $('span.error-branch_name').remove();
+                        var inputVal = $(this).val();
+                        if(inputVal.length==0)
+                        {
+                $(this).after('<span class="error error-branch_name" style="color:red;"></br>*Required!</span>');
+                        }
+                    });
+       $('#branch_email').keyup(function() {
+           $('span.error-branch_email').remove();
+                        var inputVal = $(this).val();
+                        if(inputVal.length>0)
+                        {
+                            var regex = /^([a-zA-Z0-9_\-\.]+)@('@')((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+                if(!regex.test(inputVal)) {
+                    $(this).after('<span class="error error-branch_email" style="color:red;"></br>Invalid Email</span>');
+        }
+    }
+            else{
+                $(this).after('<span class="error error-branch_email" style="color:red;"></br>*Required!</span>');
+    }
+       });
+        $('#branch_email').focusout(function() {
+            $('span.error-branch_email').remove();
+        var inputVal = $(this).val();
+        if(inputVal.length>0)
+        {
+            var regex = /^([a-zA-Z0-9_\-\.]+)@('@')((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+                if(!regex.test(inputVal)) {
+                    $(this).after('<span class="error error-branch_email" style="color:red;"></br>Invalid Email</span>');
+    }
+            }
+            else{
+                $(this).after('<span class="error error-branch_email" style="color:red;"></br>*Required!</span>');
+    }
+        });
+        $('#branch_phone').keyup(function() {
+            $('span.error-branch_phone').remove();
+        var inputVal = $(this).val();
+        if(inputVal.length>0)
+        {
+            var regex = /^([+])?([0-9]( |-)?)?(\(?[0-9]{3}\)?|[0-9]{3})( |-)?([0-9]{3}( |-)?[0-9]{4}|[a-zA-Z0-9]{7})$/;
+            if(!regex.test(inputVal)) {
+                    $(this).after('<span class="error error-branch_phone" style="color:red;"></br>Invalid Phone no e.g : 1-(123)-123-1234 | 123 123 1234 </span>');
+            }
+        }
+        else{
+                $(this).after('<span class="error error-branch_phone" style="color:red;"></br>*Required!</span>');
+        }
+    });
+        $('#branch_phone').focusout(function() {
+            $('span.error-branch_phone').remove();
+        var inputVal = $(this).val();
+        if(inputVal.length>0)
+        {
+            var regex = /^([+])?([0-9]( |-)?)?(\(?[0-9]{3}\)?|[0-9]{3})( |-)?([0-9]{3}( |-)?[0-9]{4}|[a-zA-Z0-9]{7})$/;
+            if(!regex.test(inputVal)) {
+                    $(this).after('<span class="error error-branch_phone" style="color:red;"></br>Invalid Phone no e.g : 1-(123)-123-1234 | 123 123 1234 </span>');
+            }
+        }
+        else{
+                $(this).after('<span class="error error-branch_phone" style="color:red;"></br>*Required!</span>');
+        }
+    });
+        $('#branch_address').keyup(function() {
+            $('span.error-branch_address').remove();
+        var inputVal = $(this).val();
+        if(inputVal.length>15)
+        {
+            var regex = /^[a-zA-Z0-9 ,.\-]{15,75}$/;
+            if(!regex.test(inputVal)) {
+                    $(this).after('<span class="error error-branch_address" style="color:red;"></br>Only Address special characters</span>');
+            }
+        }
+        else{
+                $(this).after('<span class="error error-branch_address" style="color:red;"></br>Address Length should be minimum 15</span>');
+        }
+    });
+        $('#branch_address').focusout(function() {
+            $('span.error-branch_address').remove();
+        var inputVal = $(this).val();
+        if(inputVal.length>15)
+        {
+            var regex = /^[a-zA-Z0-9 ,.\-]{15,75}$/;
+            if(!regex.test(inputVal)) {
+                    $(this).after('<span class="error error-branch_address" style="color:red;"></br>Only Address special characters</span>');
+            }
+        }
+        else{
+                $(this).after('<span class="error error-branch_address" style="color:red;"></br>Address Length should be minimum 15</span>');
+        }
+    });
+
+        $('#submit').click(function() {
+            $('span.error-btn').remove();
+        if($('span.error').length ==0){
+
+
+            return true;
+
+
+        } else {
+                $(this).after('<span class="error-btn" style="color:red"></br>     *Fill All Fields</span>');
+            return false;
+        }
+    });
+    });
+</script>
+<div class="parallax light-wrapper parallax4">
+    <div class="container inner text-center">
+        <div class="thin">
+            <div class="carousel-wrapper">
+
+                @if (Model == null)
+                {
+                    <h3 class="main-title">Add Branch</h3>
+                }
+                else
+                {
+                    <h3 class="main-title">Edit Branch</h3>
+                }
+
+                <br />
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-container">
+
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                        <div class="row ">
+                            <div class="col-md-12 hidden">
+                                <div class="col-md-3"></div>
+                                <div class="col-md-6">
+                                    @Html.EditorFor(model => model.branch_id, new { htmlAttributes = new { @class = "form-control", @placeholder = "Branch Id" } })
+
+                                </div>
+                                <div class="col-md-3"></div>
+                            </div>
+
+
+                            <div class="col-md-12">
+                                <div class="col-md-3"></div>
+                                <div class="col-md-6">
+                                    <div class="form-field">
+                                        <label>
+                                            @Html.EditorFor(model => model.branch_name, new { htmlAttributes = new { @class = "form-control", @placeholder = "Branch Name" } })
+                                            <span class="error error-branch_name" style="color:red;"><br /></span>
+                                            <i class="icon-briefcase"></i>
+                                        </label>
+                                    </div>
+                                </div>
+                                    <div class="col-md-3"></div>
+                                </div>
+
+                            <div class="col-md-12">
+                                <div class="col-md-3"></div>
+                                <div class="col-md-6">
+                                    <div class="form-field">
+                                        <label>
+                                            @Html.EditorFor(model => model.branch_email, new { htmlAttributes = new { @class = "form-control", @placeholder = "Branch Email" } })
+                                            <span class="error error-branch_email" style="color:red;"><br /></span>
+                                            <i class="icon-mail"></i>
+                                        </label>
+                                    </div>
+                                </div>
+                                    <div class="col-md-3"></div>
+                                </div>
+                            <div class="col-md-12">
+                                <div class="col-md-3"></div>
+                                <div class="col-md-6">
+                                    <div class="form-field">
+                                        <label>
+                                            @Html.EditorFor(model => model.branch_phone, new { htmlAttributes = new { @class = "form-control", @placeholder = "Branch Phone No" } })
+                                            <span class="error error-branch_phone" style="color:red;"><br /></span>
+                                            <i class="icon-phone"></i>
+                                        </label>
+                                    </div>
+                                </div>
+                                    <div class="col-md-3"></div>
+                                </div>
+                            <div class="col-md-12">
+                                <div class="col-md-3"></div>
+                                <div class="col-md-6">
+                                    <div class="form-field">
+                                        <label>
+                                            @Html.DropDownList("state_id", null, htmlAttributes: new { @class = "" })
+                                            <i class="icon-compass"></i>
+                                        </label>
+                                    </div>
+                                    @if (Model != null)
+                                    {
+                                        <script>
+                                        $('#state_id').val('@Model.state_id');
+                                        </script>
+                                    }
+                                </div>
+                                    <div class="col-md-3"></div>
+                                </div>
+                            <div class="col-md-12">
+                                <div class="col-md-3"></div>
+                                <div class="col-md-6">
+                                    <textarea placeholder="Branch Address" class="" id="branch_address" name="branch_address">@if (Model != null)
+                                    {@Model.branch_address;
+                                    }</textarea>
+                                    <span class="error error-branch_address" style="color:red;"><br /></span>
+                                </div>
+                                <div class="col-md-3"></div>
+                            </div>
+                            <br />
+                            <input type="submit" value="Submit" id="submit" class="btn btn-default" style="width:48%" />
+                            <br />
+
+                        </div>
+                    </div>
+                }
+
+                @Html.ActionLink("View Branch List", "BranchList")
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function()
+    {
+        if($('#branch_id').val()>0){
+            $('span.error').remove();
+        }
+
+    });
+</script>

@@ -1,0 +1,59 @@
+﻿@model PDP_Payroll.Models.BranchModel
+
+@{
+    ViewBag.Title = "BranchView";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="parallax light-wrapper parallax4">
+    <div class="container inner ">
+        <div class="thin">
+            <div class="carousel-wrapper">
+                <h3 class="main-title text-center">Branch Detail</h3>
+                <a href="~/Home/BranchEdit/ @Model.branch_id" style="float:right;margin-right:20%"><span class="icon-edit"></span>Edit Branch</a>
+                <dl class="dl-horizontal" style="margin-left:25%">
+                    
+                    <dt>
+                        Branch Name
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.branch_name)
+                    </dd>
+                    <dt>
+                        State
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.State.state_name)
+                    </dd>
+                    <dt>
+                        Branch Address
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.branch_address)
+                    </dd>
+                   
+                    <dt>
+                        Branch Phone No
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.branch_phone)
+                    </dd>
+
+                    <dt>
+                        Branch Email
+                    </dt>
+                    
+                    <dd>
+                        @Html.DisplayFor(model => model.branch_email)
+                    </dd>
+
+                </dl>
+                <a href="~/Home/BranchList" style="margin-left:30%">View Branch List</a>
+            </div>
+        </div>
+    </div>
+</div>

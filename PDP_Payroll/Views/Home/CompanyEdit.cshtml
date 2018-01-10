@@ -1,0 +1,259 @@
+﻿@model PDP_Payroll.Models.CompanyModel
+@using PDP_Payroll.Models
+@{
+    ViewBag.Title = "CompanyEdit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script type="text/javascript">
+    @if (TempData["Alert"] != null)
+    {
+        <text>alert('@TempData["Alert"]');</text>
+        TempData["Alert"] = null;
+    }
+
+    $(document).ready(function()
+    {
+
+        $('#company_name').keyup(function() {
+            $('span.error-company_name').remove();
+            var inputVal = $(this).val();
+            if(inputVal.length==0)
+            {
+                $(this).after('<span class="error error-company_name" style="color:red;"></br>*Required!</span>');
+            }
+        });
+        $('#company_name').focusout(function() {
+            $('span.error-company_name').remove();
+            var inputVal = $(this).val();
+            if(inputVal.length==0)
+            {
+                $(this).after('<span class="error error-company_name" style="color:red;"></br>*Required!</span>');
+            }
+        });
+       $('#company_Email').keyup(function() {
+           $('span.error-company_Email').remove();
+            var inputVal = $(this).val();
+            if(inputVal.length>0)
+            {
+                var regex = /^([a-zA-Z0-9_\-\.]+)@('@')((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+                if(!regex.test(inputVal)) {
+                    $(this).after('<span class="error error-company_Email" style="color:red;"></br>Invalid Email</span>');
+                }
+            }
+            else{
+                $(this).after('<span class="error error-company_Email" style="color:red;"></br>*Required!</span>');
+            }
+       });
+        $('#company_Email').focusout(function() {
+            $('span.error-company_Email').remove();
+            var inputVal = $(this).val();
+            if(inputVal.length>0)
+            {
+                var regex = /^([a-zA-Z0-9_\-\.]+)@('@')((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+                if(!regex.test(inputVal)) {
+                    $(this).after('<span class="error error-company_Email" style="color:red;"></br>Invalid Email</span>');
+                }
+            }
+            else{
+                $(this).after('<span class="error error-company_Email" style="color:red;"></br>*Required!</span>');
+            }
+        });
+        $('#company_phone').keyup(function() {
+            $('span.error-company_phone').remove();
+            var inputVal = $(this).val();
+            if(inputVal.length>0)
+            {
+                var regex = /^([+])?([0-9]( |-)?)?(\(?[0-9]{3}\)?|[0-9]{3})( |-)?([0-9]{3}( |-)?[0-9]{4}|[a-zA-Z0-9]{7})$/;
+                if(!regex.test(inputVal)) {
+                    $(this).after('<span class="error error-company_phone" style="color:red;"></br>Invalid Phone no e.g : 1-(123)-123-1234 | 123 123 1234 </span>');
+                }
+            }
+            else{
+                $(this).after('<span class="error error-company_phone" style="color:red;"></br>*Required!</span>');
+            }
+        });
+        $('#company_phone').focusout(function() {
+            $('span.error-company_phone').remove();
+            var inputVal = $(this).val();
+            if(inputVal.length>0)
+            {
+                var regex = /^([+])?([0-9]( |-)?)?(\(?[0-9]{3}\)?|[0-9]{3})( |-)?([0-9]{3}( |-)?[0-9]{4}|[a-zA-Z0-9]{7})$/;
+                if(!regex.test(inputVal)) {
+                    $(this).after('<span class="error error-company_phone" style="color:red;"></br>Invalid Phone no e.g : 1-(123)-123-1234 | 123 123 1234 </span>');
+                }
+            }
+            else{
+                $(this).after('<span class="error error-company_phone" style="color:red;"></br>*Required!</span>');
+            }
+        });
+        $('#company_address').keyup(function() {
+            $('span.error-company_address').remove();
+            var inputVal = $(this).val();
+            if(inputVal.length>15)
+            {
+                var regex = /^[a-zA-Z0-9 ,.\-]{15,75}$/;
+                if(!regex.test(inputVal)) {
+                    $(this).after('<span class="error error-company_address" style="color:red;"></br>Only Address special characters</span>');
+                }
+            }
+            else{
+                $(this).after('<span class="error error-company_address" style="color:red;"></br>Address Length should be minimum 15</span>');
+            }
+        });
+        $('#company_address').focusout(function() {
+            $('span.error-company_address').remove();
+            var inputVal = $(this).val();
+            if(inputVal.length>15)
+            {
+                var regex = /^[a-zA-Z0-9 ,.\-]{15,75}$/;
+                if(!regex.test(inputVal)) {
+                    $(this).after('<span class="error error-company_address" style="color:red;"></br>Only Address special characters</span>');
+                }
+            }
+            else{
+                $(this).after('<span class="error error-company_address" style="color:red;"></br>Address Length should be minimum 15</span>');
+            }
+        });
+
+        $('#submit').click(function() {
+            $('span.error-btn').remove();
+            if($('span.error').length ==0){
+
+
+                return true;
+
+
+            } else {
+                $(this).after('<span class="error-btn" style="color:red"></br>     *Fill All Fields</span>');
+                return false;
+            }
+        });
+    });
+</script>
+<div class="parallax light-wrapper parallax4">
+    <div class="container inner text-center">
+        <div class="thin">
+            <div class="carousel-wrapper">
+
+                @if (Model==null)
+                {
+                    <h3 class="main-title">Add Your Company</h3>
+                }
+                else
+                {
+                    <h3 class="main-title">Edit Your Company</h3>
+                }
+
+                <br />
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-container">
+
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                        <div class="row ">
+                            <div class="col-md-12 hidden">
+                                <div class="col-md-3"></div>
+                                <div class="col-md-6">
+                                    @Html.EditorFor(model => model.company_id, new { htmlAttributes = new { @class = "form-control", @placeholder = "company Id" } })
+                                    
+                                </div>
+                                <div class="col-md-3"></div>
+                            </div>
+
+                            
+                            <div class="col-md-12">
+                                <div class="col-md-3"></div>
+                                <div class="col-md-6">
+                                    <div class="form-field">
+                                        <label>
+                                            @Html.EditorFor(model => model.company_name, new { htmlAttributes = new { @class = "form-control", @placeholder = "Company Name" } })
+                                            <span class="error error-company_name" style="color:red;"><br /></span>
+                                            <i class="icon-briefcase"></i>
+                                            </label>
+                                    </div>
+                                    </div>
+                                    <div class="col-md-3"></div>
+                                </div>
+                            
+                            <div class="col-md-12">
+                                <div class="col-md-3"></div>
+                                <div class="col-md-6">
+                                    <div class="form-field">
+                                        <label>
+                                            @Html.EditorFor(model => model.company_Email, new { htmlAttributes = new { @class = "form-control", @placeholder = "Company Email" } })
+                                            <span class="error error-company_Email" style="color:red;"><br /></span>
+                                            <i class="icon-mail"></i>
+                                        </label>
+                                    </div>
+                                </div>
+                                    <div class="col-md-3"></div>
+                                </div>
+                            <div class="col-md-12">
+                                <div class="col-md-3"></div>
+                                <div class="col-md-6">
+                                    <div class="form-field">
+                                        <label>
+                                            @Html.EditorFor(model => model.company_phone, new { htmlAttributes = new { @class = "form-control", @placeholder = "Company Phone No" } })
+                                            <span class="error error-company_phone" style="color:red;"><br /></span>
+                                            <i class="icon-phone"></i>
+                                        </label>
+                                    </div>
+                                </div>
+                                    <div class="col-md-3"></div>
+                                </div>
+                            <div class="col-md-12">
+                                <div class="col-md-3"></div>
+                                <div class="col-md-6">
+                                    <div class="form-field">
+                                        <label class="custom-select">
+                                            @Html.DropDownList("state_id", null, htmlAttributes: new { @class = "" })
+                                            <i class="icon-compass"></i><span><!-- fake select handler --></span>
+                                        </label>
+                                    </div>
+                                    @if (Model != null)
+                                    {
+                                        <script>
+                                        $('#state_id').val('@Model.state_id');
+                                        </script>
+                                    }
+                                </div>
+                                    <div class="col-md-3"></div>
+                                </div>
+                            <div class="col-md-12">
+                                <div class="col-md-3"></div>
+                                <div class="col-md-6">
+
+                                    <textarea placeholder="Company Address" class="" id="company_address" name="company_address">@if (Model != null){@Model.company_address;}</textarea>
+                                    <span class="error error-company_address" style="color:red;"><br /></span>
+                                </div>
+                                <div class="col-md-3"></div>
+                            </div>
+                            <br />
+                            <input type="submit" value="Submit" id="submit" class="btn btn-default" style="width:48%" />
+                            <br />
+                           
+                        </div>
+
+
+
+
+
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function()
+    {
+        if($('#company_id').val()>0){            
+            $('span.error').remove();
+        }
+
+    });
+</script>

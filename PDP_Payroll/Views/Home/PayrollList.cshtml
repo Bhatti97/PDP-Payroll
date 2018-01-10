@@ -1,0 +1,57 @@
+﻿@model IEnumerable<PDP_Payroll.Models.PayRoll_ParentModel>
+
+@{
+    ViewBag.Title = "PayrollList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<br />
+<br />
+<div class="parallax light-wrapper parallax4">
+    <div class="container inner ">
+        <div class="thin">
+            <div class="carousel-wrapper">
+                <h3 class="main-title">PayRolls</h3>
+                <p>
+                    @Html.ActionLink("Add Payroll", "CalculatePayroll")
+                </p>
+                <div class="toolbar">
+                    <!--        Here you can write extra buttons/actions for the toolbar              -->
+                </div>
+                <div class="material-datatables">
+                    <table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>
+                                    PayRoll
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Date)
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Payroll_Title)
+                                    </td>
+                                    <td>
+                                        @item.Date.ToString("dd-MM-yyyy")
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink("Edit", "EditPayroll", new { id = item.PayRoll_Parent_id }) |
+                                        @Html.ActionLink("Delete", "DeletePayRoll", new { id = item.PayRoll_Parent_id })
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
